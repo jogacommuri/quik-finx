@@ -29,7 +29,7 @@ import { Input } from './ui/input';
 import { createAccount } from "@/actions/dashboard";
 import useFetch from "@/hooks/use-fetch";
 import { Loader2 } from "lucide-react";
-import { Toaster } from "@/components/ui/sonner"
+import { toast } from "sonner";
 
 
 const CreateAccountDrawer = ({children}) => {
@@ -48,7 +48,7 @@ const CreateAccountDrawer = ({children}) => {
 
     const {
         loading: createAccountLoading,
-        fn: createAccount,
+        fn: createAccountFn,
         error,
         data: newAccount,
     } = useFetch(createAccount);
@@ -63,9 +63,9 @@ const CreateAccountDrawer = ({children}) => {
             reset();
             setOpen(false);
         }
-        }, [newAccount, reset]);
+    }, [newAccount, createAccountLoading]);
 
-        useEffect(() => {
+    useEffect(() => {
         if (error) {
             toast.error(error.message || "Failed to create account");
         }
